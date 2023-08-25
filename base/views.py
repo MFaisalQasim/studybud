@@ -1,14 +1,10 @@
 from django.shortcuts import render, HttpResponse
+from .models import Profile
 
 # Create your views here.
-profiles = [
-    {'id':1 , 'name':'faisal' },
-    {'id':2 , 'name':'zahid' },
-    {'id':3 , 'name':'tayyab' },
-]
 
 def index(request):
-    # return HttpResponse("hi there this is faisal") 
+    profiles = Profile.objects.all()
     context = {
         'profiles' : profiles
         }
@@ -17,5 +13,11 @@ def index(request):
 def home(request):
     return render(request, 'base/home.html')
 
-def room(request):
-    return render(request, 'base/room.html')
+def profile(request, pk):
+    profile = Profile.objects.get(id=pk)
+    # profile = None
+    # for i in profiles:
+    #   if i['id'] == int[pk]:
+    #       profile == i
+    context = { 'profile': profile }
+    return render(request, 'base/profile.html', context)

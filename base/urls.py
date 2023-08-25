@@ -21,7 +21,5 @@ from base import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('home', views.home, name='home'),
-    path('room', views.room, name='room'),
-    # path('', views.index.html, name='index'),
-    # path('', views.index.html, name='index'),
+    path('personal-profile/<str:pk>', views.profile, name='profile'),
 ]
