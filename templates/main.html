@@ -10,13 +10,11 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="styles.css" />
+    {% comment %} <link rel="stylesheet" href="styles.css" /> {% endcomment %}
   </head>
 
   {% include 'nav.html' %}
   
-  {% block nav %} {% endblock nav %} 
-
   {% block body %}{% endblock body %}
 
   <script

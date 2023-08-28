@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+{% block title %} s Page {% endblock title %}
+
+{% block body %} 
+<h1>Host : {{ room.host }}</h1>
+<h2>Room Name : {{ room.name }}</h2>
+<h3>Room Topic : {{ room.topic }}</h3>
+{{ room.messages }}
+{% for message in room.messages  %}
+{{ message }}
+{% endfor %}
+<hr>
+{% endblock body %}

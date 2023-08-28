@@ -1,0 +1,78 @@
+{% extends 'main.html' %} {% block title %} Main Page {% endblock title %} 
+{% block body %}
+
+<style>
+  .index-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+  .index-container .sections {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+  .sections {
+    padding: 5px;
+    justify-self: center;
+  }
+  .sections section {
+    padding: 5px;
+  }
+</style>
+
+<div class="index-container">
+  <aside class="sections">
+    <h1><b>Filter Rooms</b></h1>
+    <br />
+    <a href="{% url 'rooms' %}">All</a>
+    <br />
+    {% for topic in topics %}
+    <br />
+    <a href="{% url 'rooms' %}?q={{ topic.name }}"
+      >{{ topic.id }} ). {{ topic.name}}</a
+    >
+    <br />
+    {% endfor %}
+  </aside>
+  <div class="sections">
+    <section class="rooms">
+      <span>
+        <h1><b>Rooms</b></h1>
+        <p class="float-end">
+            <a class="btn btn-dark" href="/create-room">Create New Room</a>
+          </p>
+      </span>      
+      <br />
+      <br />
+      <hr />
+      {% for room in rooms %}
+      <p class="float-end">
+        <a class="btn btn-dark" href="{% url 'update-room' room.id %}"
+          >Update</a
+        >
+        <a class="btn btn-dark" href="{% url 'delete-room' room.id %}"
+          >Delete</a
+        >
+      </p>
+      <br />
+      Room Topic : <b>{{ room.topic }}</b> <br />
+      Room Name : <b>{{ room.name }}</b> <br />
+      Room Desc : <span>{{ room.desc }}</span> <br />
+      <br />
+      <a href='{% url "room" room.id %}'>@{{ room.host}}</a> Room Host <br />
+      <hr />
+      {% endfor %}
+    </section>
+    <section class="profiles">
+      <b>Profiles</b>
+      <br />
+      <br />
+      {% for profile in profiles %} {{ profile.id }}
+      <a href='{% url "profile" profile.id %}'>{{ profile.name}}</a> <br />
+      {% endfor %}
+      <br />
+      <br />
+    </section>
+  </div>
+</div>
+
+{% endblock body %}
