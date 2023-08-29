@@ -37,14 +37,18 @@
     <section class="rooms">
       <span>
         <h1><b>Rooms</b></h1>
+        <span><b>{{ rooms_count }} room available</b></span>
+        {% if user.username %}
         <p class="float-end">
-            <a class="btn btn-dark" href="/create-room">Create New Room</a>
-          </p>
-      </span>      
+          <a class="btn btn-dark" href="/create-room">Create New Room</a>
+        </p>
+        {% endif %} 
+      </span>
       <br />
       <br />
       <hr />
-      {% for room in rooms %}
+      {% for room in rooms %} 
+      {% if user.username == room.host %}
       <p class="float-end">
         <a class="btn btn-dark" href="{% url 'update-room' room.id %}"
           >Update</a
@@ -54,6 +58,7 @@
         >
       </p>
       <br />
+      {% endif %} 
       Room Topic : <b>{{ room.topic }}</b> <br />
       Room Name : <b>{{ room.name }}</b> <br />
       Room Desc : <span>{{ room.desc }}</span> <br />
