@@ -8,7 +8,7 @@
   }
   .index-container .sections {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2fr 1fr;
   }
   .sections {
     padding: 5px;
@@ -42,13 +42,12 @@
         <p class="float-end">
           <a class="btn btn-dark" href="/create-room">Create New Room</a>
         </p>
-        {% endif %} 
+        {% endif %}
       </span>
       <br />
       <br />
       <hr />
-      {% for room in rooms %} 
-      {% if user.username == room.host %}
+      {% for room in rooms %} {% if request.user == room.host %}
       <p class="float-end">
         <a class="btn btn-dark" href="{% url 'update-room' room.id %}"
           >Update</a
@@ -60,7 +59,8 @@
       <br />
       {% endif %} 
       Room Topic : <b>{{ room.topic }}</b> <br />
-      Room Name : <b>{{ room.name }}</b> <br />
+      Room Name : 
+      <a href='{% url "room" room.id %}'><b>{{ room.name }}</b></a> <br />
       Room Desc : <span>{{ room.desc }}</span> <br />
       <br />
       <a href='{% url "room" room.id %}'>@{{ room.host}}</a> Room Host <br />
@@ -71,8 +71,8 @@
       <b>Profiles</b>
       <br />
       <br />
-      {% for profile in profiles %} {{ profile.id }}
-      <a href='{% url "profile" profile.id %}'>{{ profile.name}}</a> <br />
+      {% for profile in profiles %}
+      <a href='{% url "profile" profile.id %}'>@{{ profile.username}}</a> <br />
       {% endfor %}
       <br />
       <br />

@@ -1,0 +1,7 @@
+{% extends 'main.html' %}
+{% block title %}Create message Form{% endblock title %} {% block body %}
+<form class="form-control" method="POST" action="">
+  {% csrf_token %} {{ messageForm.as_p }}
+  <button class="btn btn-outline-dark" type="submit">Submit</button>
+</form>
+{% endblock body %}
