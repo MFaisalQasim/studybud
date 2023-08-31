@@ -1,0 +1,12 @@
+<h1>Recent Activities</h1>
+<h3>Total Recent Activities : {{ recent_activities_count }}</h3>
+<div class="Recent ctivities">
+  {% for recent_activitie in recent_activities %}
+  <br />
+  <a href='{% url "profile" recent_activitie.user.id %}'
+    >@{{ recent_activitie.user }}
+  </a>
+  {{ recent_activitie.created | timesince }} ago <br />
+  <b>{{ recent_activitie.room }}</b> <br />
+  {% endfor %}
+</div>

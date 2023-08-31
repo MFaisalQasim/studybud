@@ -1,0 +1,8 @@
+
+{% for topic in topics %}
+<br />
+<a href="{% url 'rooms' %}?q={{ topic.name }}"
+  >{{ topic.id }} ). {{ topic.name}}</a
+>
+<br />
+{% endfor %}

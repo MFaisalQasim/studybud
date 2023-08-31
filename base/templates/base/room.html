@@ -1,70 +1,74 @@
-{% extends 'main.html' %} {% block title %} Room Page {% endblock title %}
-{%block body %}
+{% extends 'main.html' %} {% block title %} Room Page {% endblock title %} {% block body %}
+
 <style>
   .room-container {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
   }
-  .room-container .sections {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-  }
-  .sections {
-    padding: 5px;
-    justify-self: center;
-  }
-  .sections section {
-    padding: 5px;
+  .section {
+    padding: 15px;
   }
 </style>
 <div class="room-container">
-  <div class="sections">
-    <section>
-      <h1>Host : {{ room.host }}</h1>
-      <h2>Room Name : {{ room.name }}</h2>
-      <h3>Room Topic : {{ room.topic }}</h3>
-      <hr />
-      <div class="chat-box">
-        <div class="col-6">
-          {% for message in roomMessages %}
-          <p class="float-end">
-            <a class="btn btn-dark" href="{% url 'update-message' message.id %}"
-              >Update</a
-            >
-            <a class="btn btn-dark" href="{% url 'delete-message' message.id %}"
-              >Delete</a
-            >
-          </p>
-          <br />
-          <p>
-            {{ message.created | timesince }} ago
-            <b class="text-end">by {{ message.user }}</b>
-          </p>
-          <p>{{ message.body }}</p>
-          <hr />
-          {% endfor %}
-          <br />
-          <form action="" method="post">
-            {% csrf_token %}
-            <input
-              type="text"
-              name="body"
-              placeholder=" Add Your Commit Here.. "
-            />
-          </form>
-          <hr />
-        </div>
-      </div>
-    </section>
-    <section>
-      <h1>Room participants</h1>
-      <h3>Total participants : {{ participants_count }}</h3>
-      <div class="participants">
-        {% for participant in participants %}<br />
-        @{{ participant.username }} <br />
+  <aside class="section topics">
+    <h1><b>Filter Rooms</b></h1>
+    <br />
+    <a href="{% url 'rooms' %}">All</a>
+    <br />
+    {% include 'base/topics_components.html' %}
+  </aside>
+  <section class="section feeds">
+    <h1>Host : {{ room.host }}</h1>
+    <h2>Room Name : {{ room.name }}</h2>
+    <h3>Room Topic : {{ room.topic }}</h3>
+    <hr />
+    <div class="chat-box">
+      <div class="col-6">
+        {% for message in room_messages %} {% if request.user == message.user %}
+        <p class="float-end">
+          <a class="btn btn-dark" href="{% url 'update-message' message.id %}"
+            >Update</a
+          >
+          <a class="btn btn-dark" href="{% url 'delete-message' message.id %}"
+            >Delete</a
+          >
+        </p>
+        {% endif %}
+        <br />
+        <p>
+          {{ message.created | timesince }} ago
+          <b class="text-end">by {{ message.user }}</b>
+        </p>
+        <p>{{ message.body }}</p>
+        <hr />
         {% endfor %}
+        <br />
+        {% if room_messages_count %}
+        <form action="" method="post">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="body"
+            placeholder=" Add Your Commit Here.. "
+          />
+        </form>
+        <hr />
+        {% endif %}
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+  <section class="section activities">
+    <h1>Room Participants</h1>
+    <h3>Total Participants : {{ participants_count }}</h3>
+    <div class="participants">
+      {% for participant in participants %}
+      <br />
+      <a href='{% url "profile" participant.id %}'
+        >@{{ participant.username}}</a
+      >
+      <br />
+      {% endfor %}
+    </div>
+  </section>
 </div>
 {% endblock body %}

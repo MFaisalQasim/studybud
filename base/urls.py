@@ -24,6 +24,7 @@ urlpatterns = [
     # path('profile', views.profile, name='profile'),
     # path('room', views.room, name='room'),
     path('personal-profile/<str:pk>', views.profile, name='profile'),
+    path('profiles', views.profiles, name='profiles'),
     path('room/<str:pk>', views.room, name='room'),
     path('create-room', views.createRoom, name='create-room'),
     path('update-room/<str:id>', views.updateRoom, name='update-room'),
