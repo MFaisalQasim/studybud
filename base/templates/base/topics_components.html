@@ -1,8 +1,9 @@
-
-{% for topic in topics %}
-<br />
-<a href="{% url 'rooms' %}?q={{ topic.name }}"
-  >{{ topic.id }} ). {{ topic.name}}</a
->
-<br />
-{% endfor %}
+<ul class="topics__list">
+  {% for topic in topics %}
+  <li>
+    <a href="{% url 'rooms' %}?q={{ topic.name }}" class="active"
+      > {{ topic.name}} <span>553</span></a
+    >
+  </li>
+  {% endfor %}
+</ul>

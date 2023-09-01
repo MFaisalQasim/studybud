@@ -2,7 +2,7 @@
 
 {% block title %} Guest Page {% endblock title %}
 
-{% block body %}
+{% block content %}
 <b>Index</b>
 <br />
 <br />
@@ -13,4 +13,4 @@ Profiles
 {% for profile in profiles %} {{ profile.id }} --
 <a href='{% url "profile" profile.id %}'>{{ profile.name}}</a> <br />
 {% endfor %}
-{% endblock body %}
+{% endblock content %}
