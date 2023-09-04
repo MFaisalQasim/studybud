@@ -1,4 +1,5 @@
-{% extends 'main.html' %} {% block title %} profile Page {% endblock title %} {% block content %}
+{% extends 'main.html' %} {% block title %} Profile Page {% endblock title %} {%
+block content %}
 
 <style>
   .profile-container {
@@ -16,12 +17,13 @@
     <br />
     <a href="{% url 'profiles' %}">All</a>
     <br />
+    <br />
     {% include 'base/topics_components.html' %}
   </aside>
   <section class="section feeds">
     <span>
       <h1><b>Rooms</b></h1>
-      <span><b>{{ rooms_count }} room available</b></span>
+      <span><b>{{ rooms.count }} room available</b></span>
       {% if user.username %}
       <p class="float-end">
         <a class="btn btn-dark" href="/create-room">Create New Room</a>
@@ -33,8 +35,6 @@
     <hr />
     {% include 'base/feeds_components.html' %}
   </section>
-  <section class="section activities">
-      {% include 'base/activities_components.html' %}
-  </section>
+  {% include 'base/activities_components.html' %}
 </div>
 {% endblock content %}

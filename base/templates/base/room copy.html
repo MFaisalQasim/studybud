@@ -43,7 +43,7 @@
         <hr />
         {% endfor %}
         <br />
-        {% if room_messages_count %}
+        {% if room_messages.count %}
         <form action="" method="post">
           {% csrf_token %}
           <input
@@ -59,7 +59,7 @@
   </section>
   <section class="section activities">
     <h1>Room Participants</h1>
-    <h3>Total Participants : {{ participants_count }}</h3>
+    <h3>Total Participants : {{ participants.count }}</h3>
     <div class="participants">
       {% for participant in participants %}
       <br />

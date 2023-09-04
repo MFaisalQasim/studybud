@@ -1,8 +1,15 @@
 <ul class="topics__list">
+  <h1><b>Filter Rooms</b></h1>
+  <br />
+  <li>
+    <a href="{% url 'rooms' %}" class="active">
+      All <span>{{ all_Rooms.count }}</span></a
+    >
+  </li>
   {% for topic in topics %}
   <li>
-    <a href="{% url 'rooms' %}?q={{ topic.name }}" class="active"
-      > {{ topic.name}} <span>553</span></a
+    <a href="{% url 'rooms' %}?q={{ topic.name }}" class="active">
+      {{ topic.name}} <span>{{ rooms.count }}</span></a
     >
   </li>
   {% endfor %}

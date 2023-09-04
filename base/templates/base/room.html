@@ -1,15 +1,4 @@
 {% extends 'main.html' %} {% block title %} Room Page {% endblock title %} {% block content %}
-
-<style>
-  .room-container {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-  }
-  .section {
-    padding: 15px;
-  }
-</style>
-
 <main class="profile-page layout layout--2">
   <div class="container">
     <!-- Room Start -->
@@ -109,9 +98,7 @@
               <span>@{{ room.host }}</span>
             </a>
           </div>
-          <div class="room__details">
-            {{ room.desc }}
-          </div>
+          <div class="room__details">{{ room.desc }}</div>
           <span class="room__topics">{{ room.name }}</span>
         </div>
 
@@ -135,10 +122,7 @@
                 </div>
 
                 <div class="thread__delete">
-                  <a
-                    href="{% url 'update-message' message.id %}">
-                      
-                    
+                  <a href="{% url 'update-message' message.id %}">
                     <svg
                       enable-background="new 0 0 24 24"
                       height="32"
@@ -204,7 +188,7 @@
     <!--   Start -->
     <div class="participants">
       <h3 class="participants__top">
-        Participants <span>({{ participants_count }} Joined)</span>
+        Participants <span>({{ participants.count }} Joined)</span>
       </h3>
 
       <div class="participants__list scroll">

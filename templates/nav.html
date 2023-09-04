@@ -36,7 +36,7 @@
           <div class="avatar avatar--medium active">
             <img src="https://randomuser.me/api/portraits/men/37.jpg" />
           </div>
-          <p>John Doe <span>@john_doe</span></p>
+          <p>{{ user.username }} <span>@{{ user.username }}</span></p>
         </a>
         <button class="dropdown-button">
           <svg
@@ -68,7 +68,7 @@
           </svg>
           Settings</a
         >
-        <a href="login.html" class="dropdown-link"
+        <a href="{% url 'logout' %}" class="dropdown-link"
           ><svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
