@@ -23,7 +23,8 @@
         </div>
 
         <div class="room__topRight">
-          <a href="#">
+          {% if request.user == room.host %}
+          <a href="{% url 'update-room' room.id %}">
             <svg
               enable-background="new 0 0 24 24"
               height="32"
@@ -51,7 +52,7 @@
               </g>
             </svg>
           </a>
-          <a href="#">
+          <a href="{% url 'delete-room' room.id %}">
             <svg
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -65,6 +66,7 @@
               ></path>
             </svg>
           </a>
+          {% endif %}
         </div>
 
         <!-- <button class="action-button" data-id="120" data-delete-url="https://randomuser.me/api/3324923"
@@ -91,7 +93,7 @@
           </div>
           <div class="room__hosted">
             <p>Hosted By</p>
-            <a href="#" class="room__author">
+            <a href="{% url 'profile' room.host.id %}" class="room__author">
               <div class="avatar avatar--small">
                 <img src="https://randomuser.me/api/portraits/men/37.jpg" />
               </div>
@@ -104,11 +106,14 @@
 
         <div class="room__conversation">
           <div class="threads scroll">
-            {% for message in room_messages %} {% if request.user == message.user %}
+            {% for message in room_messages %}
             <div class="thread">
               <div class="thread__top">
                 <div class="thread__author">
-                  <a href="#" class="thread__authorInfo">
+                  <a
+                    href="{% url 'profile' message.user.id %}"
+                    class="thread__authorInfo"
+                  >
                     <div class="avatar avatar--small">
                       <img
                         src="https://randomuser.me/api/portraits/men/37.jpg"
@@ -120,7 +125,7 @@
                     >{{ message.created | timesince }} ago</span
                   >
                 </div>
-
+                {% if request.user == message.user %}
                 <div class="thread__delete">
                   <a href="{% url 'update-message' message.id %}">
                     <svg
@@ -165,10 +170,11 @@
                     </svg>
                   </a>
                 </div>
+                {% endif %}
               </div>
               <div class="thread__details">{{ message.body }}</div>
             </div>
-            {% endif %} {% endfor %}
+            {% endfor %}
           </div>
         </div>
       </div>
