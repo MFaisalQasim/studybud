@@ -32,7 +32,7 @@
       <!-- Logged In -->
 
       <div class="header__user">
-        <a href="profile.html">
+        <a href="{% url 'profile' user.id %}">
           <div class="avatar avatar--medium active">
             <img src="https://randomuser.me/api/portraits/men/37.jpg" />
           </div>
@@ -53,7 +53,7 @@
       </div>
 
       <div class="dropdown-menu">
-        <a href="settings.html" class="dropdown-link"
+        <a href="{% url 'update-profile' user.id %}" class="dropdown-link"
           ><svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"

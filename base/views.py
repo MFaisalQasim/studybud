@@ -3,9 +3,8 @@ from .models import Profile, Room, Topic, Messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import RoomForm, MessageForm
+from .forms import RoomForm, MessageForm, UserForm, MyUserCreationForm
 from django.db.models import Q
 
 
@@ -62,6 +61,15 @@ def room(request, pk):
 
 
 @login_required(login_url='login')
+def profiles(request):
+    profiles = User.objects.all()
+    context = {
+        'profiles': profiles,
+    }
+    return render(request, 'base/profiles.html', context)
+
+
+@login_required(login_url='login')
 def profile(request, pk):
     profile = User.objects.get(id=pk)
     rooms = profile.room_set.all().order_by('-created')
@@ -75,12 +83,21 @@ def profile(request, pk):
 
 
 @login_required(login_url='login')
-def profiles(request):
-    profiles = User.objects.all()
+def updateProfile(request, id):
+    user = request.user
+    user_form = UserForm(instance=user)
+    if request.user != user:
+        return HttpResponse('You Are Not Allowed Here')
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, request.FILES, instance=user)
+        if user_form.is_valid():
+            user.save()
+        return redirect("/")
+
     context = {
-        'profiles': profiles,
-    }
-    return render(request, 'base/profiles.html', context)
+        'user_form': user_form,
+        'user': user, }
+    return render(request, 'base/user_form.html', context)
 
 
 @login_required(login_url='login')
@@ -121,7 +138,7 @@ def updateRoom(request, id):
 
     context = {
         'room_form': room_form, 'topics': topics,
-        'room': room, }
+        'room': room}
     return render(request, 'base/room_form.html', context)
 
 
@@ -163,18 +180,16 @@ def deleteMessage(request, id):
         return HttpResponse('You Are Not Allowed Here')
     if request.method == 'POST':
         messages.delete()
-        
+
         return redirect("/")
     return render(request, 'base/delete.html', {'obj': messages})
-        # print('here', messages.room__participants)
-        # exit        
 
 
 def registerUser(request):
 
-    regiterUserFrom = UserCreationForm()
+    regiterUserFrom = MyUserCreationForm()
     if request.method == 'POST':
-        regiterUserFrom = UserCreationForm(request.POST)
+        regiterUserFrom = MyUserCreationForm(request.POST)
         if regiterUserFrom.is_valid():
             user = regiterUserFrom.save(commit=False)
             user.username = user.username.lower()
@@ -192,17 +207,18 @@ def loginUser(request):
     page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
+    
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        email = request.POST.get('email').lower()
         password = request.POST.get('password')
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=email)
         except:
             messages.error(request, 'User Does Not Exists')
             return redirect('login')
 
         loginedInUser = authenticate(
-            request, username=username, password=password)
+            request, email=email, password=password)
         if loginedInUser is not None:
             login(request, loginedInUser)
             return redirect('rooms')

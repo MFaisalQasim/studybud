@@ -3,7 +3,7 @@
 <!-- <div class="container my-5">
   {% if page == 'login' %}
   <h1>Login Page!</h1>
-  <form method="POST" action="/login">
+ <form class="form" method="POST" action="/login">
     {% csrf_token %}
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -32,7 +32,7 @@
   </form>
   {% else %}
   <h1>Register Page!</h1>
-  <form method="POST" action="/register">
+ <form class="form" method="POST" action="/register">
     {% csrf_token %} {{ regiterUserFrom.as_p }}
     <button type="submit" class="btn btn-primary">Submit</button>
     <a href="login">Already Register?</a>
@@ -54,13 +54,15 @@
         <form class="form" method="POST" action="/login">
           {% csrf_token %}
           <div class="form__group form__group">
-            <label for="room_name">Username</label>
+            <!-- <label for="room_name">Username</label>
             <input
               id="username"
               name="username"
               type="text"
               placeholder="e.g. dennis_ivy"
-            />
+            /> -->
+            <label for="room_name">Email</label>
+            <input id="username" name="email" type="email" placeholder="e.g. dennis_ivy@email.com />
           </div>
           <div class="form__group">
             <label for="password">Password</label>
@@ -92,10 +94,14 @@
         </form>
         {% else %}
         <h1>Register Page!</h1>
-        <form method="POST" action="/register">
+       <form class="form" method="POST" action="/register">
           {% csrf_token %} 
-          
+          {% for field in regiterUserFrom  %}
           <div class="form__group form__group">
+            <label for="room_name">{{ field.label }}</label>
+            {{ field }}
+          </div>
+          <!-- <div class="form__group form__group">
             <label for="room_name">Username</label>
             <input
               id="username"
@@ -121,7 +127,7 @@
               type="password"
               placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
             />
-          </div>
+          </div> -->
           <button class="btn btn--main" type="submit">
             <svg
               version="1.1"

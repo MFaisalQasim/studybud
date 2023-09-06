@@ -34,7 +34,7 @@
 //       popup.classList.add('popup');
 //       popup.classList.add(`popup-${buttonId}`);
 //       popup.innerHTML = `<a href="${editUrl}">Edit</a>
-//       <form action="${deleteUrl}" method="delete">
+//      <form class="form" action="${deleteUrl}" method="delete">
 //         <button type="submit">Delete</button>
 //       </form>`;
 //       button.insertAdjacentElement('afterend', popup);
