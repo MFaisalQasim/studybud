@@ -19,10 +19,7 @@ from django.urls import path, include
 from base import views
 
 urlpatterns = [
-    # path('', views.index, name='index'),
     path('', views.rooms, name='rooms'),
-    # path('profile', views.profile, name='profile'),
-    # path('room', views.room, name='room'),
     path('profiles', views.profiles, name='profiles'),
     path('profile/<str:pk>', views.profile, name='profile'),
     path('update-profile/<str:id>', views.updateProfile, name='update-profile'),

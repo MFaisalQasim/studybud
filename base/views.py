@@ -1,12 +1,13 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import Profile, Room, Topic, Messages
-from django.contrib.auth.models import User
+from .models import Profile, Room, Topic, Messages, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import RoomForm, MessageForm, UserForm, MyUserCreationForm
+from .forms import RoomForm, MessageForm, UserForm
+# , MyUserCreationForm
 from django.db.models import Q
-
+from django.contrib.auth.forms import UserCreationForm
+ 
 
 @login_required(login_url='login')
 def index(request):
@@ -187,9 +188,9 @@ def deleteMessage(request, id):
 
 def registerUser(request):
 
-    regiterUserFrom = MyUserCreationForm()
+    regiterUserFrom = UserCreationForm()
     if request.method == 'POST':
-        regiterUserFrom = MyUserCreationForm(request.POST)
+        regiterUserFrom = UserCreationForm(request.POST)
         if regiterUserFrom.is_valid():
             user = regiterUserFrom.save(commit=False)
             user.username = user.username.lower()
