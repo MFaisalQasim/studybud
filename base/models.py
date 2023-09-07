@@ -3,11 +3,10 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    name = models.CharField(("name"), null=True, max_length=50)
-    email = models.EmailField(("email"),unique=True, max_length=254)
-    bio = models.TextField(("bio"), null=True)
-
-    # avatar
+    name = models.CharField(max_length=200, null=True)
+    email = models.EmailField(unique=True, null=True)
+    bio = models.TextField(null=True)
+    avatar = models.ImageField(("avatar"), null=True, default="avatar.svg")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

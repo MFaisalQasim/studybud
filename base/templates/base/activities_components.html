@@ -11,10 +11,10 @@
         class="roomListRoom__author"
       >
         <div class="avatar avatar--small">
-          <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+          <img src="{{recent_activitie.user.avatar.url}}" alt="{{recent_activitie.user.name}}" />
         </div>
         <p>
-          @{{ recent_activitie.user }}
+          @{{ recent_activitie.user.username }}
           <span>{{ recent_activitie.created | timesince }} ago</span>
         </p>
       </a>

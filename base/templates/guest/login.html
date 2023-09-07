@@ -1,45 +1,5 @@
 {% extends 'guest.html' %} {% block title %} Login Page {% endblock title %} {% block content %}
 
-<!-- <div class="container my-5">
-  {% if page == 'login' %}
-  <h1>Login Page!</h1>
- <form class="form" method="POST" action="/login">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input
-        name="username"
-        type="username"
-        class="form-control"
-        id="exampleInputusername1"
-        aria-describedby="usernameHelp"
-      />
-      <div id="usernameHelp" class="form-text">
-        We'll never share your username with anyone else.
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input
-        name="password"
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-      />
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="register">Already Login?</a>
-  </form>
-  {% else %}
-  <h1>Register Page!</h1>
- <form class="form" method="POST" action="/register">
-    {% csrf_token %} {{ regiterUserFrom.as_p }}
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="login">Already Register?</a>
-  </form>
-  {% endif %}
-</div> -->
-
 <main class="auth layout">
   <div class="container">
     <div class="layout__box">
@@ -54,16 +14,14 @@
         <form class="form" method="POST" action="/login">
           {% csrf_token %}
           <div class="form__group form__group">
-            <!-- <label for="room_name">Username</label>
+            <label for="room_name">Email</label>
             <input
               id="username"
-              name="username"
-              type="text"
-              placeholder="e.g. dennis_ivy"
-            /> -->
-            <label for="room_name">Email</label>
-            <input id="username" name="email" type="email" placeholder="e.g.
-            dennis_ivy@email.com />
+              name="email"
+              type="email"
+              placeholder="e.g.
+            dennis_ivy@email.com "
+            />
           </div>
           <div class="form__group">
             <label for="password">Password</label>
@@ -93,43 +51,19 @@
             Login
           </button>
         </form>
+        <div class="auth__action">
+          <p>Haven't signed up yet?</p>
+          <a href="register" class="btn btn--link">Sign Up</a>
+        </div>
         {% else %}
         <h1>Register Page!</h1>
-        <form class="form" method="POST" action="/register">
-          {% csrf_token %}
-          <!-- {% for field in regiterUserFrom  %}
+        <form class="form" method="POST" action="register">
+          {% csrf_token %} {% for filed in regiterUserFrom %}
           <div class="form__group form__group">
-            <label for="room_name">{{ field.label }}</label>
-            {{ field }}
-          </div> 
-        {% endfor  %}-->
-          <div class="form__group form__group">
-            <label for="room_name">Username</label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="e.g. dennis_ivy"
-            />
+            <label for="room_name">{{ filed.label }}</label>
+            {{ filed }}
           </div>
-          <div class="form__group">
-            <label for="password1">Password</label>
-            <input
-              id="password1"
-              name="password1"
-              type="password"
-              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-            />
-          </div>
-          <div class="form__group">
-            <label for="password2">Password</label>
-            <input
-              id="password2"
-              name="password2"
-              type="password"
-              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-            />
-          </div>
+          {% endfor %}
           <button class="btn btn--main" type="submit">
             <svg
               version="1.1"
@@ -148,14 +82,13 @@
             </svg>
             Signup
           </button>
-          <a href="login">Already Register?</a>
         </form>
+        <div class="auth__action">
+          <p>Have you already signed up?</p>
+          <a href="login" class="btn btn--link">Login</a>
+        </div>
         {% endif %}
 
-        <div class="auth__action">
-          <p>Haven't signed up yet?</p>
-          <a href="register" class="btn btn--link">Sign Up</a>
-        </div>
       </div>
     </div>
   </div>

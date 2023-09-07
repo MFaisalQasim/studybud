@@ -3,10 +3,8 @@ from .models import Profile, Room, Topic, Messages, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import RoomForm, MessageForm, UserForm
-# , MyUserCreationForm
+from .forms import RoomForm, MessageForm, UserForm, MyUserCreationForm
 from django.db.models import Q
-from django.contrib.auth.forms import UserCreationForm
  
 
 @login_required(login_url='login')
@@ -159,16 +157,15 @@ def deleteRoom(request, id):
 @login_required(login_url='login')
 def updateMessage(request, id):
 
-    messages = Messages.objects.get(id=id)
-    message_form = MessageForm(instance=messages)
-    if request.user != messages.user:
+    message = Messages.objects.get(id=id)
+    message_form = MessageForm(instance=message)
+    if request.user != message.user:
         return HttpResponse('You Are Not Allowed Here')
     if request.method == 'POST':
-        message_form = MessageForm(request.POST, instance=messages)
+        message_form = MessageForm(request.POST, instance=message)
         if message_form.is_valid():
             message_form.save()
         return redirect("/room")
-
     context = {'message_form': message_form}
     return render(request, 'base/message_form.html', context)
 
@@ -176,21 +173,20 @@ def updateMessage(request, id):
 @login_required(login_url='login')
 def deleteMessage(request, id):
 
-    messages = Messages.objects.get(id=id)
-    if request.user != messages.user:
+    message = Messages.objects.get(id=id)
+    if request.user != message.user:
         return HttpResponse('You Are Not Allowed Here')
     if request.method == 'POST':
-        messages.delete()
-
+        message.delete()
         return redirect("/")
-    return render(request, 'base/delete.html', {'obj': messages})
+    return render(request, 'base/delete.html', {'obj': message})
 
 
 def registerUser(request):
 
-    regiterUserFrom = UserCreationForm()
+    regiterUserFrom = MyUserCreationForm()
     if request.method == 'POST':
-        regiterUserFrom = UserCreationForm(request.POST)
+        regiterUserFrom = MyUserCreationForm(request.POST)
         if regiterUserFrom.is_valid():
             user = regiterUserFrom.save(commit=False)
             user.username = user.username.lower()
@@ -198,7 +194,8 @@ def registerUser(request):
             login(request, user)
             return redirect('rooms')
         else:
-            messages.error(request, 'Sometime Goes Wrong During Register')
+            # messages.error(request, 'Sometime Goes Wrong During Register')
+            messages.error(request, request.error)
     context = {'regiterUserFrom': regiterUserFrom}
     return render(request, 'guest/login.html', context)
 
@@ -207,13 +204,13 @@ def loginUser(request):
 
     page = 'login'
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('rooms')
     
     if request.method == 'POST':
         email = request.POST.get('email').lower()
         password = request.POST.get('password')
         try:
-            user = User.objects.get(email=email)
+            loginedInUser = User.objects.get(email=email)
         except:
             messages.error(request, 'User Does Not Exists')
             return redirect('login')
@@ -224,7 +221,7 @@ def loginUser(request):
             login(request, loginedInUser)
             return redirect('rooms')
         else:
-            messages.error('User`s Credential Are Not Valid')
+            messages.error(request,'User`s Credential Are Not Valid')
             return redirect('login')
     context = {'page': page}
     return render(request, 'guest/login.html', context)
