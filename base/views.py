@@ -194,8 +194,7 @@ def registerUser(request):
             login(request, user)
             return redirect('rooms')
         else:
-            # messages.error(request, 'Sometime Goes Wrong During Register')
-            messages.error(request, request.error)
+            messages.error(request, 'Sometime Goes Wrong During Register')
     context = {'regiterUserFrom': regiterUserFrom}
     return render(request, 'guest/login.html', context)
 

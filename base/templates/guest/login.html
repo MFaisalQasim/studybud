@@ -57,7 +57,7 @@
         </div>
         {% else %}
         <h1>Register Page!</h1>
-        <form class="form" method="POST" action="register">
+        <form class="form" method="POST" action="">
           {% csrf_token %} {% for filed in regiterUserFrom %}
           <div class="form__group form__group">
             <label for="room_name">{{ filed.label }}</label>
